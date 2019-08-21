@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const GeoJSON = require('mongoose-geojson-schema');
 
-const councilSchema = new mongoose.Schema({
+const councilAreaSchema = new mongoose.Schema({
     any: mongoose.Schema.Types.GeoJSON,
     point: mongoose.Schema.Types.Point,
     multipoint: mongoose.Schema.Types.MultiPoint,
@@ -15,7 +15,6 @@ const councilSchema = new mongoose.Schema({
     featurecollection: mongoose.Schema.Types.FeatureCollection
 });
 
-const Council = mongoose.model('Council', councilSchema);
+const CouncilArea = mongoose.model('Council-Area', councilAreaSchema);
 
-exports.Council = Council;
-
+exports.CouncilArea = CouncilArea;
