@@ -6,8 +6,6 @@ const config = require('config');
 const app = express();
 const port = process.env.PORT || 3000;
 
-
-
 mongoose.connect(config.db, { useNewUrlParser: true })
     .then(async () => {
         console.log('Connected to MongoDB...');
