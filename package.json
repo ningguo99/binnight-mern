@@ -7,11 +7,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
+  "engines": {
+    "node": "10.15.1"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.0",
+    "config": "^3.2.2",
     "express": "^4.17.1",
     "mongoose": "^5.6.9",
     "mongoose-geojson-schema": "^2.1.3",

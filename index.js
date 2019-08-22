@@ -2,12 +2,13 @@ const mongoose = require('mongoose');
 const councils = require('./routes/councils');
 const councilAreas = require('./routes/councilAreas');
 const express = require('express');
+const config = require('config');
 const app = express();
 const port = process.env.PORT || 3000;
-//const { app: { port }, db: { mongodb } } = require('./config');
 
 
-mongoose.connect(process.env.MongoDBURL, { useNewUrlParser: true })
+
+mongoose.connect(config.db, { useNewUrlParser: true })
     .then(async () => {
         console.log('Connected to MongoDB...');
     })
