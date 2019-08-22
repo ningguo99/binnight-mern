@@ -15,9 +15,7 @@ router.get('/:name/:latitude/:longitude', async (req, res) => {
         name: req.params.name
     });
     if (!currentCouncil) return res.status(404).send('No council areas found.');
-    console.log(currentCouncil);
     const currentCouncilFetures = currentCouncil.toObject().features;
-    //console.log(currentCouncilFetures);
     res.send(getCollectionDetails(currentCouncilFetures, req.params.latitude, req.params.longitude));
 });
 
