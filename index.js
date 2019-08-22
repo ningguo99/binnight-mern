@@ -3,9 +3,10 @@ const councils = require('./routes/councils');
 const councilAreas = require('./routes/councilAreas');
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
+const { app: { port }, db: { mongodb } } = require('./config');
 
-mongoose.connect('mongodb://localhost/geodata', { useNewUrlParser: true })
+
+mongoose.connect(mongodb, { useNewUrlParser: true })
     .then(async () => {
         console.log('Connected to MongoDB...');
     })
@@ -15,5 +16,6 @@ app.use(express.json());
 app.use('/api/councils', councils);
 app.use('/api/council-areas', councilAreas);
 
+//console.log(process.env.NODE_ENV);
 
 app.listen(port, () => console.log(`Listening on port ${port}...`));
