@@ -13,9 +13,9 @@ router.get('/:latitude/:longitude/:userTime', async (req, res) => {
         name: councilName
     });
     if (!currentCouncil) return res.status(404).send("Sorry, we don't have any data for your location. ");
-    const currentCouncilFeatures = currentCouncil.toObject().features;
+    
 
-    res.send(getCollectionDetails(currentCouncilFeatures, req.params.latitude, req.params.longitude, req.params.userTime));
+    res.send(getCollectionDetails(currentCouncil.toObject(), req.params.latitude, req.params.longitude, req.params.userTime));
 });
 
 
@@ -56,12 +56,14 @@ function inWhichCouncil(councilsList, latitude, longitude) {
 
 /**
  * Return the waste collection details that the specified coordinate belongs to.
- * @param {*} currentCouncilFeatures a list of all polygons in a council.
+ * @param {*} currentCouncil a list of all polygons in a council.
  * @param {*} latitude a specified location's latitude.
  * @param {*} longitude a specified location's longitude.
  * @param {*} userTime the user's current local time.
  */
-function getCollectionDetails(currentCouncilFeatures, latitude, longitude, userTime) {
+function getCollectionDetails(currentCouncil, latitude, longitude, userTime) {
+    const currentCouncilFeatures = currentCouncil.features;
+
     var featureCollection = {
         type: 'FeatureCollection',
         features: []
@@ -83,10 +85,11 @@ function getCollectionDetails(currentCouncilFeatures, latitude, longitude, userT
         const poly = lookup.search(longitude, latitude);
         const details = poly.properties;
         const info = {
+            council: currentCouncil.name,
             rubNext: '',
             recNext: '',
             grnNext: '',
-            missedPh: details.missed_ph
+            details: details
         }
 
         const userMoment = moment(new Date(userTime));
