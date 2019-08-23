@@ -9,7 +9,6 @@ router.get('/:latitude/:longitude/:userTime', async (req, res) => {
     const councilsList = await Council.find();
     const councilName = inWhichCouncil(councilsList, req.params.latitude, req.params.longitude);
 
-
     const currentCouncil = await CouncilArea.findOne({
         name: councilName
     });
@@ -56,11 +55,12 @@ function inWhichCouncil(councilsList, latitude, longitude) {
 }
 
 /**
-* Return the waste collection details that the specified coordinate belongs to.
-* @param {*} currentCouncilFeatures a list of all polygons in a council.
-* @param {*} latitude a specified location's latitude.
-* @param {*} longitude a specified location's longitude.
-*/
+ * Return the waste collection details that the specified coordinate belongs to.
+ * @param {*} currentCouncilFeatures a list of all polygons in a council.
+ * @param {*} latitude a specified location's latitude.
+ * @param {*} longitude a specified location's longitude.
+ * @param {*} userTime the user's current local time.
+ */
 function getCollectionDetails(currentCouncilFeatures, latitude, longitude, userTime) {
     var featureCollection = {
         type: 'FeatureCollection',
@@ -82,47 +82,30 @@ function getCollectionDetails(currentCouncilFeatures, latitude, longitude, userT
     try {
         const poly = lookup.search(longitude, latitude);
         const details = poly.properties;
-        return calculateNextDays(details, userTime);
+        const info = {
+            rubNext: '',
+            recNext: '',
+            grnNext: '',
+            missedPh: details.missed_ph
+        }
 
-    } catch (err) {
-        console.error('Error: Not Found\n', err);
-        return "No council area found.";
-    }
-}
-
-function calculateNextDays(details, userTime) {
-    const info = {
-        rubNext: '',
-        recNext: '',
-        grnNext: '',
-        missedPh: details.missed_ph
-    }
-    try {
         const userMoment = moment(new Date(userTime));
-
         const rubPeriod = 7 * parseInt(details.rub_weeks.trim());
         if (rubPeriod !== 0) {
             const rubMoment = moment(new Date(details.rub_start));
             const rubDaysDiff = userMoment.diff(rubMoment, 'days');
             const rubRemainder = rubDaysDiff % rubPeriod;
-            
-
-
             info.rubNext = rubRemainder
                 === 0 ? userTime : userMoment.clone().add(rubPeriod - rubRemainder, 'd').toISOString().substring(0, 10);
         }
-
         const recPeriod = 7 * parseInt(details.rec_weeks.trim());
         if (recPeriod !== 0) {
             const recMoment = moment(new Date(details.rec_start));
             const recDaysDiff = userMoment.diff(recMoment, 'days');
             const recRemainder = recDaysDiff % recPeriod;
-
-
             info.recNext = recRemainder
                 === 0 ? userTime : userMoment.clone().add(recPeriod - recRemainder, 'd').toISOString().substring(0, 10);
         }
-
         const grnPeriod = 7 * parseInt(details.grn_weeks.trim());
         if (grnPeriod !== 0) {
             const grnMoment = moment(new Date(details.grn_start));
@@ -134,8 +117,8 @@ function calculateNextDays(details, userTime) {
         return info;
 
     } catch (err) {
-        console.error("Error", err);
-        return 'hehe';
+        console.error('Error: Not Found\n', err);
+        return "No council area found.";
     }
 }
 

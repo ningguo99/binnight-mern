@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const councils = require('./routes/councils');
-const councilAreas = require('./routes/councilAreas');
 const areas = require('./routes/areas');
 const express = require('express');
 const config = require('config');
@@ -14,8 +12,6 @@ mongoose.connect(config.db, { useNewUrlParser: true })
     .catch(err => console.error('Fail to connect to MongoDB...', err));
 
 app.use(express.json());
-app.use('/api/councils', councils);
-app.use('/api/council-areas', councilAreas);
 app.use('/api/areas', areas);
 
 //console.log(process.env.NODE_ENV);
