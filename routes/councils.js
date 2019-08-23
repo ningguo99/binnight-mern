@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
   res.send(councilsList);
 });
 
-router.get('/in-which-council/:latitude/:longitude', async (req, res) => {
+router.get('/:latitude/:longitude', async (req, res) => {
   const councilsList = await Council.find();
   res.send(inWhichCouncil(councilsList, req.params.latitude, req.params.longitude));
 });
@@ -31,7 +31,7 @@ function inWhichCouncil(councilsList, latitude, longitude) {
     featureCollection.features.push({
       type: "Feature",
       properties: {
-        councilName: councilsList[index].toObject().properties.lga_name
+        councilName: councilsList[index].toObject().properties.lga_short1
       },
       geometry: {
         type: 'MultiPolygon',

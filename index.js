@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const councils = require('./routes/councils');
 const councilAreas = require('./routes/councilAreas');
+const areas = require('./routes/areas');
 const express = require('express');
 const config = require('config');
 const app = express();
@@ -15,8 +16,8 @@ mongoose.connect(config.db, { useNewUrlParser: true })
 app.use(express.json());
 app.use('/api/councils', councils);
 app.use('/api/council-areas', councilAreas);
+app.use('/api/areas', areas);
 
 //console.log(process.env.NODE_ENV);
-
 
 app.listen(port, () => console.log(`Listening on port ${port}...`));
