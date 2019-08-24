@@ -84,13 +84,13 @@ function getCollectionDetails(currentCouncil, latitude, longitude, userTime) {
     try {
         const poly = lookup.search(longitude, latitude);
         const details = poly.properties;
-        const info = {
+        let info = {
             council: currentCouncil.name,
             rubNext: '',
             recNext: '',
-            grnNext: '',
-            details: details
-        }
+            grnNext: ''
+        };
+        Object.assign(info,details);
 
         const userMoment = moment(new Date(userTime));
         const rubPeriod = 7 * parseInt(details.rub_weeks.trim());
