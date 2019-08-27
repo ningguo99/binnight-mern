@@ -35,7 +35,7 @@ function inWhichCouncil(councilsList, latitude, longitude) {
         featureCollection.features.push({
             type: "Feature",
             properties: {
-                councilName: councilsList[index].toObject().properties.lga_short1
+                councilName: councilsList[index].toObject().properties.lga_name
             },
             geometry: {
                 type: 'MultiPolygon',
