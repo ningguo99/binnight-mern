@@ -13,7 +13,6 @@ router.get('/:latitude/:longitude/:userTime', async (req, res) => {
         name: councilName
     });
     if (!currentCouncil) return res.status(404).send("Sorry, we don't have any data for your location. ");
-    
 
     res.send(getCollectionDetails(currentCouncil.toObject(), req.params.latitude, req.params.longitude, req.params.userTime));
 });
