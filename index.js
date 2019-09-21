@@ -11,10 +11,10 @@ mongoose.connect(config.db, { useNewUrlParser: true })
         console.log('Connected to MongoDB...');
     })
     .catch(err => console.error('Fail to connect to MongoDB...', err));
-
+app.use(cors());
 app.use(express.json());
 app.use('/api/areas', areas);
-app.use(cors());
+
 
 //console.log(process.env.NODE_ENV);
 
