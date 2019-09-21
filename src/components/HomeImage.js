@@ -10,7 +10,6 @@ class HomeImage extends React.Component {
         return (
             <div>
                 <Image src="bin_image.jpg" width="100%" />
-                
             </div>
         );
     }
