@@ -14,7 +14,7 @@ mongoose.connect(config.db, { useNewUrlParser: true })
 
 app.use(express.json());
 app.use('/api/areas', areas);
-app.use(cors());
+app.use(cors({credentials: true, origin: true}));
 
 //console.log(process.env.NODE_ENV);
 
