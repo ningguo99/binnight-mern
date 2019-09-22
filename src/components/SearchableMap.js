@@ -60,8 +60,9 @@ class SearchableMap extends React.Component {
                 pointRadiusMinPixels: 10,
                 pointRadiusMaxPixels: 10
             }),
-            searchedLocation: event.result.geometry.coordinates
+            searchedLocation: event.result
         });
+        console.log(event.result)
         this.onAddressSelected(event.result.geometry.coordinates[1], event.result.geometry.coordinates[0]);
     }
 
@@ -76,6 +77,7 @@ class SearchableMap extends React.Component {
                     Next rub:{selectedSchedule.data.rubNext}
                     Next rec:{selectedSchedule.data.recNext}
                     Next grn:{selectedSchedule.data.grnNext}
+                    {searchedLocation.place_name}
                 </div>
             )
         }
@@ -83,8 +85,9 @@ class SearchableMap extends React.Component {
         // If the user has searched a location, then show a marker on the map
         if (searchedLocation !== null) {
             marker = (<Marker
-                latitude={searchedLocation[1]}
-                longitude={searchedLocation[0]}>
+                key={searchedLocation.id}
+                latitude={searchedLocation.geometry.coordinates[1]}
+                longitude={searchedLocation.geometry.coordinates[0]}>
                 <Image
                     width="30"
                     height="30"
@@ -93,7 +96,7 @@ class SearchableMap extends React.Component {
             </Marker>)
         }
         return (
-            <div style={{ height: '50vh' }}>
+            <div style={{ height: '60vh' }}>
                 <ReactMapGL
                     ref={this.mapRef}
                     {...viewport}
