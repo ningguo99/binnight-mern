@@ -1,16 +1,22 @@
 import React from 'react';
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col, Image } from 'react-bootstrap';
+import './ScheduleInfo.css';
 
 const ScheduleInfo = (props) => {
 
 
     return (
         <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="holder.js/100px180" />
             <Card.Body>
                 
                 <Row>
                     <Col>
+                    <Image className="d-inline-block align-top"
+                        width="30"
+                        height="30"
+                        src="binnight_icon_512.png"
+                        roundedCircle 
+                        />
                     <Card.Title>Card Title</Card.Title>
                         <Card.Text>
                             Some quick example text to build on the card title and make up the bulk of

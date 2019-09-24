@@ -21,7 +21,7 @@ class App extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md={12} lg={8} >
+                        <Col md={12} lg={6} >
                             <SearchableMap />
                         </Col>
                     </Row>
