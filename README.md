@@ -1,3 +1,4 @@
+# BinNight
 ### BinNight website with basic information and functions implemented in React.
 ### Get BinNight in Google Play Store for all the functions.
 
