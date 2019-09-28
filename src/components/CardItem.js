@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, Row, Col, Image, ListGroupItem } from 'react-bootstrap';
 
-
 // Return the day of week given a date string in format 'yyyy-MM-dd'.
 function getDayOfWeek(dateStr) {
     const dayIndex = new Date(dateStr).getDay();
