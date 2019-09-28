@@ -2,7 +2,6 @@ import React from 'react';
 import ReactMapGL, { GeolocateControl, Marker } from 'react-map-gl';
 import { GeoJsonLayer } from "deck.gl";
 import Geocoder from "react-map-gl-geocoder";
-import BinSchedule from '../apis/BinSchedule';
 import { Image } from 'react-bootstrap';
 
 const geolocateStyle = {
@@ -20,19 +19,12 @@ class SearchableMap extends React.Component {
         },
         searchResultLayer: null,
         selectedSchedule: null,
-        searchedLocation: null
+        searchedLocation: null,
+        latitude: '',
+        longitude: ''
     }
 
-    onAddressSelected = async (latitude, longitude) => {
-        const currentDate = new Date().toISOString().slice(0, 10);
-
-        const response = await BinSchedule.get(`/${latitude}/${longitude}/${currentDate}`);
-        this.setState({ selectedSchedule: response });
-    };
-
-
-
-
+    // Create a map reference
     mapRef = React.createRef()
 
     handleViewportChange = viewport => {
@@ -40,7 +32,8 @@ class SearchableMap extends React.Component {
             viewport: { ...this.state.viewport, ...viewport }
         })
     }
-    // if you are happy with Geocoder default settings, you can just use handleViewportChange directly
+
+    // This will customise Geocoder settings. Or to use default settings, just pass handleViewportChange directly.
     handleGeocoderViewportChange = viewport => {
         const geocoderDefaultOverrides = { transitionDuration: 500 };
 
@@ -50,6 +43,7 @@ class SearchableMap extends React.Component {
         });
     };
 
+    // When the user search a location, initiate the searchResultLayer.
     handleOnResult = async event => {
         this.setState({
             searchResultLayer: new GeoJsonLayer({
@@ -62,26 +56,16 @@ class SearchableMap extends React.Component {
             }),
             searchedLocation: event.result
         });
-        console.log(event.result)
-        this.onAddressSelected(event.result.geometry.coordinates[1], event.result.geometry.coordinates[0]);
+        this.setState({
+            latitude: event.result.geometry.coordinates[1],
+            longitude: event.result.geometry.coordinates[0]
+        });
+        this.props.onMapResult(this.state.latitude, this.state.longitude);
     }
 
     render() {
-        const { viewport, searchResultLayer, searchedLocation, selectedSchedule } = this.state;
+        const { viewport, searchedLocation } = this.state;
         let marker;
-        let schedule;
-
-        if (selectedSchedule !== null) {
-            schedule = (
-                <div>
-                    Next rub:{selectedSchedule.data.rubNext}
-                    Next rec:{selectedSchedule.data.recNext}
-                    Next grn:{selectedSchedule.data.grnNext}
-                    {searchedLocation.place_name}
-                </div>
-            )
-        }
-
         // If the user has searched a location, then show a marker on the map
         if (searchedLocation !== null) {
             marker = (<Marker
@@ -114,6 +98,7 @@ class SearchableMap extends React.Component {
                         position='top-right'
                         countries='au'
                     />
+
                     {marker}
 
                     <GeolocateControl
@@ -121,16 +106,10 @@ class SearchableMap extends React.Component {
                         positionOptions={{ enableHighAccuracy: true }}
                         trackUserLocation={true}
                     />
-
                 </ReactMapGL>
-                <div>{schedule}</div>
-                {/* <DeckGL {...viewport} layers={[searchResultLayer]} /> */}
             </div>
         )
     }
-
-
 }
-
 
 export default SearchableMap;
