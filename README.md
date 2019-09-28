@@ -1,5 +1,5 @@
 ## BinNight website with basic information and functions implemented in React.
-## Get BinNight in Google Play Store for all the functions.
+### Get BinNight in Google Play Store for all the functions.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
