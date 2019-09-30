@@ -2,25 +2,37 @@ import React from 'react';
 import MainMenu from '../components/MainMenu';
 //import HomeImage from '../components/HomeImage';
 import SearchableMap from './SearchableMap';
-import { Container, Carousel, Row, Col, Card, Image } from 'react-bootstrap';
+import { Container, Carousel, Row, Col, Spinner } from 'react-bootstrap';
 import ScheduleCard from './ScheduleCard';
 import BinSchedule from '../apis/BinSchedule';
 
 class App extends React.Component {
 
-    state = { rubNext: '', recNext: '', grnNext: '', council: '', missedPhone: '', searched: false }
+    state = {
+        rubNext: '',
+        recNext: '',
+        grnNext: '',
+        council: '',
+        missedPhone: '',
+        searched: false,
+        waiting: false
+    };
 
+    /**
+     * Call the API and set the returned value to state when the user select a location.
+     */
     onAddressSelected = async (latitude, longitude) => {
         const currentDate = new Date().toISOString().slice(0, 10);
-        const response = await BinSchedule.get(`/${latitude}/${longitude}/${currentDate}`)
+        this.setState({ searched: true, waiting: true });
+
+        await BinSchedule.get(`/${latitude}/${longitude}/${currentDate}`)
             .then((response) => {
                 this.setState({
                     rubNext: response.data.rubNext,
                     recNext: response.data.recNext,
                     grnNext: response.data.grnNext,
                     council: response.data.council,
-                    missedPhone: response.data.missed_ph,
-                    searched: true
+                    missedPhone: response.data.missed_ph
                 });
             })
             .catch((error) => {
@@ -30,19 +42,12 @@ class App extends React.Component {
                     recNext: '',
                     grnNext: '',
                     council: '',
-                    missedPhone: '',
-                    searched: true
+                    missedPhone: ''
                 });
             })
             .finally(() => {
-                this.setState({
-                    searched: true
-                });
+                this.setState({ waiting: false });
             });
-
-        console.log(123);
-        console.log(this.state.rubNext);
-        console.log(this.state.searched);
     };
 
     render() {
@@ -65,7 +70,9 @@ class App extends React.Component {
                                 rubNext={this.state.rubNext}
                                 recNext={this.state.recNext}
                                 grnNext={this.state.grnNext}
-                                searched={this.state.searched} />
+                                searched={this.state.searched}
+                                waiting={this.state.waiting} />
+
                         </Col>
                     </Row>
                     <Row>

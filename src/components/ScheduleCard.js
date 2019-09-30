@@ -1,34 +1,48 @@
 import React from 'react';
 import CardItem from './CardItem';
-import { Card, ListGroup, Carousel, Button,Image } from 'react-bootstrap';
+import { Card, ListGroup, Carousel, Button, Image, Spinner } from 'react-bootstrap';
 import '../css/ScheduleCard.css';
-import { withRouter } from 'react-router-dom';
 
 
 class ScheduleCard extends React.Component {
 
+    state = { rubNext: '', recNext: '', grnNext: '' };
 
-    
-      routeChange() {
-        window.open("https://play.google.com/store/apps/details?id=com.binnight.bincollectionapp",'_blank')
-      }
+    /**
+     * Open a new tab and redirect the user to BinNight on Google Play.
+     */
+    routeChange() {
+        window.open("https://play.google.com/store/apps/details?id=com.binnight.bincollectionapp", '_blank')
+    }
 
-    render() {
-        let scheduleListGroup;
+    renderContent() {
         const scheduleItems = [];
-        if (this.props.rubNext !== '') {
+
+        // Push card items to Array if any.
+        if (this.props.rubNext.length > 0) {
             scheduleItems.push(<CardItem binImg="red_bin.png" binType={this.props.rubNext} key="rub" />);
         }
-        if (this.props.recNext !== '') {
+        if (this.props.recNext.length > 0) {
             scheduleItems.push(<CardItem binImg="yellow_bin.png" binType={this.props.recNext} key="rec" />);
         }
-        if (this.props.grnNext !== '') {
+        if (this.props.grnNext.length > 0) {
             scheduleItems.push(<CardItem binImg="green_bin.png" binType={this.props.grnNext} key="grn" />);
         }
 
-        // If there is any schedule, show and fillin the card list.
-        if (scheduleItems.length > 0) {
-            scheduleListGroup = (
+        // If waiting for API result, show the Loading spinner
+        if (this.props.waiting === true) {
+            return (
+                <Card style={{ marginLeft: "5vw", marginRight: '5vw' }}>
+
+                    <Spinner animation="border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </Spinner>
+                </Card>
+            );
+        } 
+        // Else if there is any schedule, show and fill in the schedule card.
+        else if (scheduleItems.length > 0) {
+            return (
                 <Card>
                     <Card.Header className="text-center">
                         <h5 style={{ margin: 0 }}><b>Next Bin Collection Days</b></h5>
@@ -38,43 +52,47 @@ class ScheduleCard extends React.Component {
                     </ListGroup>
                 </Card>
             );
-        } else if (this.props.searched === false) {
-            scheduleListGroup = (
+        } 
+        // Else if the user has not searched any location, show the hint card.
+        else if (this.props.searched === false) {
+            return (
                 <Card style={{ marginLeft: "5vw", marginRight: '5vw' }}>
-                    <Card.Body>
-                        <Card.Title>
-                            Search your location on the map to know the latest bin collection days.
-                        </Card.Title>
-                    </Card.Body>
+
+                    <Card.Header as="h5">
+                        Search your location on the map to know the latest bin collection days.
+                        </Card.Header>
+
                     <Card.Img variant="bottom" src="bin_image.jpg" />
                 </Card>
             );
-        } else {
-            scheduleListGroup = (
-                <Card style={{ marginLeft: "5vw", marginRight: '5vw' }} className="text-center">
-                    <Card.Header as="h5">
-                        Not Found
-                    </Card.Header>
-                    <Card.Body>
-                        <Card.Title>
-                            Your location is not supported
-                        </Card.Title>
-                        <Card.Text>
-                            Download BinNight at Google Play to customize your own schedule.
-                        </Card.Text>
-                        <Image 
-                        src="google-play-badge.png" 
-                        width="150px" 
-                        style={{cursor:'pointer'}}
-                        onClick={this.routeChange}/>
-                    </Card.Body>
-                </Card>
-            );
         }
+        // Else show the card telling user the location is not currently supported.
+        return (
+            <Card style={{ marginLeft: "5vw", marginRight: '5vw' }} className="text-center">
+                <Card.Header as="h5">
+                    Not Found
+                    </Card.Header>
+                <Card.Body>
+                    <Card.Title>
+                        Your location is not supported
+                        </Card.Title>
+                    <Card.Text>
+                        Download BinNight at Google Play to customize your own schedule.
+                        </Card.Text>
+                    <Image
+                        src="google-play-badge.png"
+                        width="150px"
+                        style={{ cursor: 'pointer' }}
+                        onClick={this.routeChange} />
+                </Card.Body>
+            </Card>
+        );
+    }
 
+    render() {
         return (
             <div>
-                {scheduleListGroup}
+                {this.renderContent()}
 
                 <Carousel>
                     <Carousel.Item>
@@ -118,7 +136,6 @@ class ScheduleCard extends React.Component {
             </div>
         );
     }
-    // Push card item into Array if any.
 
 }
 
