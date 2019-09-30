@@ -39,28 +39,30 @@ class ScheduleCard extends React.Component {
                     </Spinner>
                 </Card>
             );
-        } 
+        }
         // Else if there is any schedule, show and fill in the schedule card.
         else if (scheduleItems.length > 0) {
             return (
                 <Card>
-                    <Card.Header className="text-center">
-                        <h5 style={{ margin: 0 }}><b>Next Bin Collection Days</b></h5>
+                    <Card.Header as="h5" className="text-center">
+                        <b>Next Bin Collection Days</b>
                     </Card.Header>
                     <ListGroup variant="flush">
                         {scheduleItems}
                     </ListGroup>
                 </Card>
             );
-        } 
+        }
         // Else if the user has not searched any location, show the hint card.
         else if (this.props.searched === false) {
             return (
                 <Card style={{ marginLeft: "5vw", marginRight: '5vw' }}>
 
-                    <Card.Header as="h5">
-                        Search your location on the map to know the latest bin collection days.
-                        </Card.Header>
+                    <Card.Header as="h5" className="text-center">
+                        <b>
+                            Search your location on the map to know the latest bin collection days.
+                        </b>
+                    </Card.Header>
 
                     <Card.Img variant="bottom" src="bin_image.jpg" />
                 </Card>
