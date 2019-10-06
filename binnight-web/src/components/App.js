@@ -4,6 +4,7 @@ import { Container, Navbar, Nav, NavDropdown, Image } from 'react-bootstrap';
 import BinSchedule from '../apis/BinSchedule';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import SearchSchedule from './SearchSchedule';
+import axios from 'axios';
 
 class App extends React.Component {
 
@@ -24,7 +25,7 @@ class App extends React.Component {
         const currentDate = new Date().toISOString().slice(0, 10);
         this.setState({ searched: true, waiting: true });
 
-        await BinSchedule.get(`/${latitude}/${longitude}/${currentDate}`)
+        await axios.get(`/${latitude}/${longitude}/${currentDate}`)
             .then((response) => {
                 this.setState({
                     rubNext: response.data.rubNext,
