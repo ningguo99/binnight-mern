@@ -1,10 +1,9 @@
 import React from 'react';
-import MainMenu from '../components/MainMenu';
-//import HomeImage from '../components/HomeImage';
-import SearchableMap from './SearchableMap';
-import { Container, Carousel, Row, Col, Spinner } from 'react-bootstrap';
-import ScheduleCard from './ScheduleCard';
+import HomeImage from './HomeImage';
+import { Container, Navbar, Nav, NavDropdown, Image } from 'react-bootstrap';
 import BinSchedule from '../apis/BinSchedule';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
+import SearchSchedule from './SearchSchedule';
 
 class App extends React.Component {
 
@@ -52,37 +51,35 @@ class App extends React.Component {
 
     render() {
         return (
-            <div style={{ backgroundColor: '#F8F8F8', height: '100vh' }}>
-                <MainMenu />
-                <Container style={{ backgroundColor: 'white', marginTop: '30px' }}>
-                    {/* <HomeImage /> */}
-                    <Row>
-                        <Col>
-                            <div>dd</div>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={12} lg={6}>
-                            <SearchableMap onMapResult={this.onAddressSelected} />
-                        </Col>
-                        <Col md={12} lg={6}>
-                            <ScheduleCard
-                                rubNext={this.state.rubNext}
-                                recNext={this.state.recNext}
-                                grnNext={this.state.grnNext}
-                                searched={this.state.searched}
-                                waiting={this.state.waiting} />
+            <BrowserRouter>
+                <div style={{ backgroundColor: '#F8F8F8', overflow: 'auto' }}>
 
-                        </Col>
-                    </Row>
-                    <Row>
+                    <Navbar collapseOnSelect expand="lg" className="block-example border-bottom mb-0" style={{ backgroundColor: "white" }}>
+                        <Container>
+                            <Navbar.Brand as={Link} to="/" style={{ color: '#ffb944', fontWeight: 'bold' }}>
+                                <Image className="d-inline-block align-top"
+                                    width="30"
+                                    height="30"
+                                    src="binnight_icon_512.png"
+                                    roundedCircle
+                                    style={{ marginRight: 10 }} />
+                                BinNight
+                                </Navbar.Brand>
 
-
-                    </Row>
-                </Container>
-
-
-            </div>
+                            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                            <Navbar.Collapse id="responsive-navbar-nav">
+                                <Nav className="mr-auto">
+                                    <Nav.Link eventKey="1" as={Link} to="/search-schedule">Map</Nav.Link>
+                                    
+                                    
+                                </Nav>
+                            </Navbar.Collapse>
+                        </Container>
+                    </Navbar>
+                    <Route path="/" exact component={(HomeImage)} />
+                    <Route path="/search-schedule" component={SearchSchedule} />
+                </div>
+            </BrowserRouter>
         );
     }
 }
