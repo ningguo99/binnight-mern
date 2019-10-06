@@ -3,13 +3,6 @@
     /* margin-left: 15px */
 }
 
-@media (min-width: 992px){
-  .entire-card {
-    margin-left: 50px;
-    margin-right: 50px;
-  }
-}
-
 @media (max-width: 576px){
     .col-day-left {
         float: left !important;

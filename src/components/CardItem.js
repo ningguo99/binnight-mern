@@ -16,6 +16,7 @@ function getDayOfWeek(dateStr) {
  * @param {*} dateStr a given a date string in format 'yyyy-MM-dd'.
  */
 function getDayLeft(dateStr) {
+    let left;
     const diff = Math.ceil((Date.parse(new Date(dateStr)) - Date.parse(new Date())) / (24 * 60 * 60 * 1000));
     if (diff === 0) {
         return 'today';
@@ -40,7 +41,7 @@ const CardItem = ({ binImg, binType }) => {
             <Row style={{ display: 'flex', alignItems: 'center' }}>
                 <Col xs={2} className='img-col text-center'>
                     <Image
-                        width="25"
+                        width="40"
                         src={binImg} />
                 </Col>
                 <Col>

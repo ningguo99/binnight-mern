@@ -1,7 +1,7 @@
 import React from 'react';
 import CardItem from './CardItem';
-import { Card, ListGroup, Image, Spinner } from 'react-bootstrap';
-import './ScheduleCard.css';
+import { Card, ListGroup, Carousel, Button, Image, Spinner } from 'react-bootstrap';
+import '../css/ScheduleCard.css';
 
 
 class ScheduleCard extends React.Component {
@@ -43,20 +43,12 @@ class ScheduleCard extends React.Component {
         // Else if there is any schedule, show and fill in the schedule card.
         else if (scheduleItems.length > 0) {
             return (
-                <Card className="entire-card">
+                <Card>
                     <Card.Header as="h5" className="text-center">
                         <b>Next Bin Collection Days</b>
                     </Card.Header>
                     <ListGroup variant="flush">
                         {scheduleItems}
-                        {/* <ListGroupItem>
-                            Want to get reminded before bin day?
-                            <Image
-                        src="google-play-badge.png"
-                        width="150px"
-                        style={{ cursor: 'pointer' }}
-                        onClick={this.routeChange} />
-                        </ListGroupItem> */}
                     </ListGroup>
                 </Card>
             );
@@ -71,7 +63,8 @@ class ScheduleCard extends React.Component {
                             Search your location on the map to know the latest bin collection days.
                         </b>
                     </Card.Header>
-                    <Card.Img variant="bottom" src="bin_image.jpg" height='200vh' />
+
+                    <Card.Img variant="bottom" src="bin_image.jpg" />
                 </Card>
             );
         }
@@ -79,14 +72,14 @@ class ScheduleCard extends React.Component {
         return (
             <Card style={{ marginLeft: "5vw", marginRight: '5vw' }} className="text-center">
                 <Card.Header as="h5">
-                    <b>Not Found</b>
-                </Card.Header>
+                    Not Found
+                    </Card.Header>
                 <Card.Body>
                     <Card.Title>
                         Your location is not supported
                         </Card.Title>
                     <Card.Text>
-                        Download BinNight at Google Play to customize your own schedule and get reminded before collection days.
+                        Download BinNight at Google Play to customize your own schedule.
                         </Card.Text>
                     <Image
                         src="google-play-badge.png"
@@ -103,7 +96,7 @@ class ScheduleCard extends React.Component {
             <div>
                 {this.renderContent()}
 
-                {/* <Carousel>
+                <Carousel>
                     <Carousel.Item>
                         <img
                             style={{ padding: '150px' }}
@@ -140,7 +133,7 @@ class ScheduleCard extends React.Component {
                             <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
                         </Carousel.Caption>
                     </Carousel.Item>
-                </Carousel> */}
+                </Carousel>
 
             </div>
         );
