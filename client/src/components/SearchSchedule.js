@@ -25,7 +25,7 @@ class SearchSchedule extends Component {
         const currentDate = new Date().toISOString().slice(0, 10);
         this.setState({ searched: true, waiting: true });
 
-        await axios.get(`/${latitude}/${longitude}/${currentDate}`)
+        await axios.get(`api/areas/${latitude}/${longitude}/${currentDate}`)
             .then((response) => {
                 this.setState({
                     rubNext: response.data.rubNext,
