@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ScheduleCard from './ScheduleCard';
 import SearchableMap from './SearchableMap';
-import BinSchedule from '../apis/BinSchedule';
-
+import axios from 'axios';
 
 
 
@@ -26,7 +25,7 @@ class SearchSchedule extends Component {
         const currentDate = new Date().toISOString().slice(0, 10);
         this.setState({ searched: true, waiting: true });
 
-        await BinSchedule.get(`/${latitude}/${longitude}/${currentDate}`)
+        await axios.get(`/${latitude}/${longitude}/${currentDate}`)
             .then((response) => {
                 this.setState({
                     rubNext: response.data.rubNext,

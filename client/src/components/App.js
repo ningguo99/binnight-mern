@@ -17,38 +17,6 @@ class App extends React.Component {
         waiting: false
     };
 
-    /**
-     * Call the API and set the returned value to state when the user select a location.
-     */
-    onAddressSelected = async (latitude, longitude) => {
-        const currentDate = new Date().toISOString().slice(0, 10);
-        this.setState({ searched: true, waiting: true });
-
-        await BinSchedule.get(`/${latitude}/${longitude}/${currentDate}`)
-            .then((response) => {
-                this.setState({
-                    rubNext: response.data.rubNext,
-                    recNext: response.data.recNext,
-                    grnNext: response.data.grnNext,
-                    council: response.data.council,
-                    missedPhone: response.data.missed_ph
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-                this.setState({
-                    rubNext: '',
-                    recNext: '',
-                    grnNext: '',
-                    council: '',
-                    missedPhone: ''
-                });
-            })
-            .finally(() => {
-                this.setState({ waiting: false });
-            });
-    };
-
     render() {
         return (
             <BrowserRouter>
