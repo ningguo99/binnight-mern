@@ -4,6 +4,7 @@ const express = require('express');
 const config = require('config');
 const app = express();
 const cors = require('cors');
+const path = require('path');
 const port = process.env.PORT || 5000;
 
 mongoose.connect(config.db, { useNewUrlParser: true })
