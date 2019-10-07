@@ -5,8 +5,10 @@ const config = require('config');
 const app = express();
 const cors = require('cors');
 const path = require('path');
+var sslRedirect = require('heroku-ssl-redirect');
 const port = process.env.PORT || 5000;
 
+app.use(sslRedirect());
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 mongoose.connect(config.db, { useNewUrlParser: true })
