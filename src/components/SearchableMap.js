@@ -1,14 +1,10 @@
 import React from 'react';
-import ReactMapGL, { GeolocateControl, Marker } from 'react-map-gl';
+import ReactMapGL, { Marker } from 'react-map-gl';
 import { GeoJsonLayer } from "deck.gl";
 import Geocoder from "react-map-gl-geocoder";
 import { Image } from 'react-bootstrap';
 
-const geolocateStyle = {
-    float: 'left',
-    margin: '50px',
-    padding: '10px'
-};
+
 
 class SearchableMap extends React.Component {
     state = {
@@ -23,6 +19,7 @@ class SearchableMap extends React.Component {
         latitude: '',
         longitude: ''
     }
+
 
     // Create a map reference
     mapRef = React.createRef()
@@ -80,7 +77,7 @@ class SearchableMap extends React.Component {
             </Marker>)
         }
         return (
-            <div style={{ height: '60vh' }}>
+            <div style={{ height: '50vh' }}>
                 <ReactMapGL
                     ref={this.mapRef}
                     {...viewport}
@@ -101,11 +98,11 @@ class SearchableMap extends React.Component {
 
                     {marker}
 
-                    <GeolocateControl
+                    {/* <GeolocateControl
                         style={geolocateStyle}
                         positionOptions={{ enableHighAccuracy: true }}
                         trackUserLocation={true}
-                    />
+                    /> */}
                 </ReactMapGL>
             </div>
         )
