@@ -5,6 +5,7 @@ import SearchableMap from './SearchableMap';
 import { Container, Carousel, Row, Col, Spinner } from 'react-bootstrap';
 import ScheduleCard from './ScheduleCard';
 import BinSchedule from '../apis/BinSchedule';
+import axios from 'axios';
 
 class App extends React.Component {
 
@@ -25,7 +26,7 @@ class App extends React.Component {
         const currentDate = new Date().toISOString().slice(0, 10);
         this.setState({ searched: true, waiting: true });
 
-        await BinSchedule.get(`/${latitude}/${longitude}/${currentDate}`)
+        await axios.get(`api/areas/${latitude}/${longitude}/${currentDate}`)
             .then((response) => {
                 this.setState({
                     rubNext: response.data.rubNext,
