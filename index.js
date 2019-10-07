@@ -7,6 +7,8 @@ const cors = require('cors');
 const path = require('path');
 const port = process.env.PORT || 5000;
 
+app.use(express.static(path.join(__dirname, 'client/build')));
+
 mongoose.connect(config.db, { useNewUrlParser: true })
     .then(async () => {
         console.log('Connected to MongoDB...');
