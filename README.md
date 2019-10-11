@@ -1,5 +1,5 @@
 # BinNight MERN #
-BinNight using MongoDB, Express.js, React.js, and Node.js to check the next bin collection days based on user's location. The frontend side (website) is mainly for the promotion of BinNight Android App and still under development. 
+BinNight using MongoDB, Express.js, React.js, and Node.js to check the next bin collection days based on user's location. The frontend side (website) is still under development and mainly for the promotion of BinNight Android App. <b>For advanced functions please download BinNight on Google Play Store.</b>
 
 [https://www.bin-night.com](https://www.bin-night.com)
 
