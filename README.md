@@ -5,5 +5,5 @@ BinNight using MongoDB, Express.js, React.js, and Node.js to check the next bin 
 
 The REST API is also consumed by the BinNight Android App.
 
-![Alt text](./client/public/google-play-badge.png)
+![](./client/public/google-play-badge.png=100px)
 
